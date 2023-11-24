@@ -1,92 +1,71 @@
-#include <iomanip>
-#include <vector>
 #include <iostream>
-#include <math.h>
+#include <vector>
+#include<iomanip>
 using namespace std;
 
-double xi(int i,double widthx,double a){
-    double xi=a+i*widthx;
-    return xi;
+void printMatrix(const vector<vector<double>>& matrix){
+    for (const vector<double>& row : matrix) {
+        for (const double& val : row) {
+            cout<< val<<setw(35);
+        }
+        cout<<"\n";
+    }
+    cout<<'\n';
+}
+// Прямой ход метода Гаусса
+void forwardElimination(vector<vector<double>>& augmentedMatrix, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            double ratio = augmentedMatrix[j][i] / augmentedMatrix[i][i];
+            for (int k = 0; k <= n; k++) {
+                augmentedMatrix[j][k] -= ratio * augmentedMatrix[i][k];
+            }
+        }
+         printMatrix(augmentedMatrix);
+    }
 }
 
-double yj(int j,double widthy,double b){
-    double yj=b+j*widthy;
-    return yj;  
-}
-double TPIntegral(double a,double b,double(*func)(double),double eps){
-    int N=1;
-    double width=(b-a)/N;
-    double Integral=func(a) + func(b);
-    double Integral2;
-   while (abs(Integral-Integral2)>3*eps){
-        N*=2;
-        Integral2=Integral;
-        width=(b-a)/N;
-        for(int i=0;i<N-1;i++){
-            Integral+=2*func(a+i*width);
+// Обратный ход метода Гаусса
+vector<double> backSubstitution(const vector<vector<double>>& augmentedMatrix, int n) {
+    vector<double> solution(n);
+    for (int i = n - 1; i >= 0; i--) {
+        solution[i] = augmentedMatrix[i][n];
+        for (int j = i + 1; j < n; j++) {
+            solution[i] -= augmentedMatrix[i][j] * solution[j];
         }
-        Integral*=width/2;
+        solution[i] /= augmentedMatrix[i][i];
     }
-    return Integral;
+    return solution;
 }
-double SMIntegral(double a,double b,double(*func)(double),double eps){
+void relativeError(){
     
-     int N=1;
-    double width=(b-a)/N;
-    double Integral=func(a) + func(b);
-    double Integral2;
-   while (abs(Integral-Integral2)>15*eps){
-        N*=2;
-        Integral2=Integral;
-        width=(b-a)/N;
-        for(int i=1;i<N/2;i++){
-            Integral+=4*func(a+(2*i-1)*width);
+}
+
+// Метод Гаусса для решения системы линейных уравнений
+vector<double> gaussElimination(const vector<vector<double>>& A, const vector<double>& B) {
+    int n = A.size();
+    
+    // Создаем расширенную матрицу [A | B]
+    vector<vector<double>> augmentedMatrix(n, vector<double>(n + 1));
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            augmentedMatrix[i][j] = A[i][j];
         }
-        for(int i=1;i<N/2-1;i++){
-            Integral+=2*func(a+(2*i)*width);   
-        }
-        Integral*=width/3;
+        augmentedMatrix[i][n] = B[i];
     }
-    return Integral;
+
+    // Прямой ход
+    forwardElimination(augmentedMatrix, n);
+
+    // Обратный ход
+    vector<double> solution = backSubstitution(augmentedMatrix, n);
+
+    return solution;
 }
-double DISMIntegral(double a,double A,double b,double B,double(*func)(double,double),int N,int M){
-    double answer=0;
-//    double xi=0,yj=0;
-    double widthx=(A-a)/(2*N);
-    double widthy=(B-b)/(2*M);
-    for(int i=0;i<N;i++){
-        for(int j=0;j<M;j++){
-             answer += func(xi(2*i,widthx,a),yj(2*j,widthy,b)) 
-                     
-                     + 4*func(xi(2*i+1,widthx,a),yj(2*j,widthy,b)) 
-                     
-                     + func(xi(2*i+2,widthx,a),yj(2*j,widthy,b)) 
-                     
-                     + 4*func(xi(2*i,widthx,a),yj(2*j+1,widthy,b)) 
-                     
-                     + 16*func(xi(2*i+1,widthx,a)+1,yj(2*j+1,widthy,b))
-                     
-                     + 4*func(xi(2*i+2,widthx,a),yj(2*j+1,widthy,b)) 
-                     
-                     + func(xi(2*i,widthx,a),yj(2*j+2,widthy,b)) 
-                     
-                     + 4*func(xi(2*i+1,widthx,a),yj(2*j+2,widthy,b))
-                     
-                     + func(xi(2*i+2,widthx,a),yj(2*j+2,widthy,b));
-        }
+void printAnswer(vector<double> result){
+    cout << "Solution:";
+    for (double value : result) {
+        cout << " " << value;
     }
-   answer*=((widthx*widthy)/9);
-    return answer;
+    cout << endl;
 }
-
-
-double Task(double x){
-    return (exp(x/2))/sqrt(x+1);
-}
-double TaskDoubleIN(double x,double y){
-    return sin(x+y);
-}
-void printAnswer(double answer){
-    cout<<setprecision(10)<<"Answer = "<<answer<<endl;
-}
-
