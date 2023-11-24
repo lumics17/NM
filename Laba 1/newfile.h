@@ -1,9 +1,12 @@
 #pragma once
-double TPIntegral(double a,double b,double(*func)(double),double esp);
-double Task(double x);
-void printAnswer(double answer);
-double SMIntegral(double a,double b,double(*func)(double),double eps);
-double DISMIntegral(double a,double A,double b,double B,double(*func)(double,double),int N,int M);
-double TaskDoubleIN(double x,double y);
-double yj(int j,double widthy,double b);
-double xi(int i,double widthx,double a);
+#include<vector>
+using namespace std;
+void forwardElimination(vector<vector<double>>& augmentedMatrix, int n);
+
+// Обратный ход метода Гаусса
+vector<double> backSubstitution(const vector<vector<double>>& augmentedMatrix, int n);
+
+// Метод Гаусса для решения системы линейных уравнений
+vector<double> gaussElimination(const vector<vector<double>>& A, const vector<double>& B);
+void printAnswer(vector<double> result);
+void printMatrix(const v
