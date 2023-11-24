@@ -1,24 +1,14 @@
 #include <iostream>
-#include <iomanip>
 #include <vector>
-#include "newfile.h" 
-#include "math.h"
+#include "Gauss_and_LDL.h"
 using namespace std;
-int main() {
-    double a=0,b=1.047;
-    double(*func)(double)=Task;
-    double eps1=pow(10,-4),eps2=pow(10,-5);
-    printAnswer(TPIntegral(a,b,func,eps1));
-    printAnswer(SMIntegral(a,b,func,eps2));
-//  cout<<TPIntegral(a,b,func,N);
-    a=0,b=0;
-    double A=M_PI/2,B=M_PI/3;
-     cout<<"Enter N:"<<endl;
-    int N=0;
-    cin>>N;
-     cout<<"Enter M:"<<endl;
-    int M=0;
-    cin>>M;
-    double (*func2)(double,double)=TaskDoubleIN;
-    printAnswer(DISMIntegral(a,A,b,B,func2,N,M));
-} 
+int main(){
+    
+    vector<vector<double>> A = {{21.547, -95.51, -96.121}, {10.223, -91.065, -7.343}, {51.218, 12.264, 86.457}};
+    vector<double> B = {-49.93,-12.465, 60.812};
+    printMatrix(A);
+    vector<double> result = gaussElimination(A, B);
+    printAnswer(result);
+
+    return 0;
+}
