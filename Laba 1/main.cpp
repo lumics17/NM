@@ -12,8 +12,12 @@ int main(){
     vector<double>F=FVector(result,B,AX,Acopy);
     cout<<"F ";
     printAnswer(F);
-    cout<<"F Norm "<<FNorm(F);
-    cout<<"Relative Error = "<<relativeError(Acopy,AX,result);
+    cout<<"F Norm "<<FNorm(F)<<endl;
+    double reltiveErr=relativeError(Acopy,AX,result);
+    cout<<"Relative Error = "<<reltiveErr;
     
+    
+    
+
     return 0;
 }
