@@ -12,10 +12,17 @@ void printMatrix(const vector<vector<double>>& matrix){
     }
     cout<<'\n';
 }
+void printAnswer(vector<double> result){
+    cout << "Solution:";
+    for (double value : result) {
+        cout <<setprecision(20)<< " " << value;
+    }
+    cout << endl;
+}
 // Прямой ход метода Гаусса
 void forwardElimination(vector<vector<double>>& augmentedMatrix, int n) {
     for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
+        for (int j = i + 1;  j < n; j++) {
             double ratio = augmentedMatrix[j][i] / augmentedMatrix[i][i];
             for (int k = 0; k <= n; k++) {
                 augmentedMatrix[j][k] -= ratio * augmentedMatrix[i][k];
@@ -40,6 +47,29 @@ vector<double> backSubstitution(const vector<vector<double>>& augmentedMatrix, i
 void relativeError(){
     
 }
+vector<double> FVector(const vector<double>& X, const vector<double>& B, vector<double>& AX, const vector<vector<double>>& Acopy){
+     vector<double> F;
+     double result;
+    for(int i = 0; i<Acopy.size();i++){
+           result = 0;
+        for(int j = 0; j<Acopy[i].size();j++){
+            result += Acopy[i][j]*X[j];
+        }
+        AX.push_back(result);
+        F.push_back(double(AX[i]-B[i]));
+    }
+    return F;
+    
+}
+double FNorm(const vector<double>& F){
+    double max = abs(F[0]);
+    for(int i = 1; i<F.size();i++){
+        if(max<abs(F[i])){
+            max = abs(F[i]);
+        }
+    }
+    return max;
+}
 
 // Метод Гаусса для решения системы линейных уравнений
 vector<double> gaussElimination(const vector<vector<double>>& A, const vector<double>& B) {
@@ -62,10 +92,18 @@ vector<double> gaussElimination(const vector<vector<double>>& A, const vector<do
 
     return solution;
 }
-void printAnswer(vector<double> result){
-    cout << "Solution:";
-    for (double value : result) {
-        cout << " " << value;
+double relativeError(vector<vector<double>>Acopy,vector<double>AX,vector<double>X){
+    vector<double>newX=gaussElimination(Acopy,AX);
+    double maxd = abs(newX[0]-X[0]);
+    double maxX = abs(X[0]);
+    for(int i = 1; i<X.size();i++){
+        if(maxd < abs(newX[i]-X[i])) {
+            maxd = abs(newX[i] - X[i]);
+        }
+        if(maxX < abs(X[i])){
+            maxX = abs(X[i]);
+        }
     }
-    cout << endl;
+    return maxd/maxX;
+    
 }
