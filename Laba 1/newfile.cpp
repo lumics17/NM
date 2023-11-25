@@ -16,7 +16,7 @@ void printMatrix(const vector<vector<double>>& matrix){
 }
 void printAnswer(vector<double> result){
     cout << "Solution:";
-    for (double value : result) {
+    for (const auto&value : result) {
         cout <<setprecision(4)<< " " << value;
     }
     cout << endl;
@@ -48,14 +48,15 @@ vector<double> backSubstitution(const vector<vector<double>>& augmentedMatrix, i
 }
 vector<double> FVector(const vector<double>& X, const vector<double>& B, vector<double>& AX, const vector<vector<double>>& Acopy){
      vector<double> F;
+     int n = Acopy.size();
      double result;
-    for(int i = 0; i<Acopy.size();i++){
+    for(int i = 0; i<n;i++){
            result = 0;
-        for(int j = 0; j<Acopy[i].size();j++){
+        for(int j = 0; j<n;j++){
             result += Acopy[i][j]*X[j];
         }
         AX.push_back(result);
-        F.push_back(double(AX[i]-B[i]));
+        F.push_back(AX[i]-B[i]);
     }
     return F;
     
@@ -90,7 +91,7 @@ vector<double> gaussElimination(const vector<vector<double>>& A, const vector<do
 
     return solution;
 }
-double relativeError(vector<vector<double>>Acopy,vector<double>AX,vector<double>X){
+double relativeError(vector<vector<double>>&Acopy,vector<double>&AX,vector<double>&X){
     vector<double>newX=gaussElimination(Acopy,AX);
     double maxd = abs(newX[0]-X[0]);
     double maxX = abs(X[0]);
