@@ -4,9 +4,11 @@
 using namespace std;
 
 void printMatrix(const vector<vector<double>>& matrix){
+    static int counter=1;
+    cout<<"Matrix"<<counter++<<':'<<endl;
     for (const vector<double>& row : matrix) {
         for (const double& val : row) {
-            cout<< val<<setw(35);
+            cout<< val<<setw(10);
         }
         cout<<"\n";
     }
@@ -15,7 +17,7 @@ void printMatrix(const vector<vector<double>>& matrix){
 void printAnswer(vector<double> result){
     cout << "Solution:";
     for (double value : result) {
-        cout <<setprecision(20)<< " " << value;
+        cout <<setprecision(4)<< " " << value;
     }
     cout << endl;
 }
@@ -44,9 +46,6 @@ vector<double> backSubstitution(const vector<vector<double>>& augmentedMatrix, i
     }
     return solution;
 }
-void relativeError(){
-    
-}
 vector<double> FVector(const vector<double>& X, const vector<double>& B, vector<double>& AX, const vector<vector<double>>& Acopy){
      vector<double> F;
      double result;
@@ -74,7 +73,6 @@ double FNorm(const vector<double>& F){
 // Метод Гаусса для решения системы линейных уравнений
 vector<double> gaussElimination(const vector<vector<double>>& A, const vector<double>& B) {
     int n = A.size();
-    
     // Создаем расширенную матрицу [A | B]
     vector<vector<double>> augmentedMatrix(n, vector<double>(n + 1));
     for (int i = 0; i < n; i++) {
