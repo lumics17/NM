@@ -14,6 +14,7 @@ double J2Dx01(const double& x01, const double& x02);
 
 double J2Dx02(const double& x01, const double& x02);
 void J(std::vector<double>& x0,std::vector<std::vector<double>> &matrix);
+void J1(std::vector<double>& x0,std::vector<std::vector<double>>& matrix,double M);
 double delta1(const std::vector<double>& x0);
 double delta2(const std::vector<double>& x0,const std::vector<double>& xk1);
 void PrintAnswer(const std::vector<double> x0,int k);
