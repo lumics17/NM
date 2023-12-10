@@ -31,6 +31,12 @@ void J(vector<double>& x0,vector<vector<double>>& matrix){
     matrix[1][0]=J2Dx01(x0[0],x0[1]);
     matrix[1][1]=J2Dx02(x0[0],x0[1]);
 }
+void J1(vector<double>& x0,vector<vector<double>>& matrix,double M){
+    matrix[0][0] = (function1(x0[0] + M * x0[0], x0[1]) - function1(x0[0], x0[1])) / M * x0[0];
+    matrix[0][1] = (function1(x0[0], x0[1] + M * x0[1]) - function1(x0[0], x0[1])) / M * x0[1];
+    matrix[1][0] = (function2(x0[0] + M * x0[0], x0[1]) - function2(x0[0], x0[1])) / M * x0[0];
+    matrix[1][1] = (function2(x0[0], x0[1] + M * x0[1]) - function2(x0[0], x0[1])) / M * x0[1];
+}
 double delta1(const vector<double>& x0){
     double f1=function1(x0[0],x0[1]),f2=function2(x0[0],x0[1]);
     if(abs(f1)>abs(f2))return f1;
