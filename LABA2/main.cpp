@@ -15,12 +15,29 @@ int main() {
     int size=2;
     vector<vector<double>> JMatrix(size,vector<double>(size));
     vector<double>F(size);
-    
+     // int ch=0;
+        // double M=0;
+        // switch(ch){
+        //     case 1:{
+        //         M=0.01;
+        //         break;
+        //     }
+        //     case 2:{
+        //         M=0.05;
+        //         break;
+        //     }
+        //     case 3:{
+        //         M=0.1;
+        //         break;
+        //     }
+        //     default:
+        //     M=0.01;
+        // }
     while(d1>eps||d2>eps){
         if(NIT<=k) {cout<<"IER=2";break;}
         F[0]=-function1(x0[0],x0[1]);
         F[1]=-function2(x0[0],x0[1]);
-        J(x0,JMatrix);
+        J(x0,JMatrix);// or use function J1 with M 
         vector<double>result=gaussElimination(JMatrix,F);
         xk1[0]+=result[0];
         xk1[1]+=result[1];
