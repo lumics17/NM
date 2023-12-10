@@ -30,7 +30,6 @@ void forwardElimination(vector<vector<double>>& augmentedMatrix, int n) {
                 augmentedMatrix[j][k] -= ratio * augmentedMatrix[i][k];
             }
         }
-         printMatrix(augmentedMatrix);
     }
 }
 
