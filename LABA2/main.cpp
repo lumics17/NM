@@ -1,11 +1,12 @@
 #include <cstdlib>
 #include<iostream>
+#include<iomanip>
 #include<vector>
 #include"Newton.h"
 #include"Gauss_and_LDL.h"
 using namespace std;
 int main() {
-
+    setprecision(8);
     const double eps = 1e-9;
     const int NIT=150;
     vector<double>x0={1,1},xk1(x0);
@@ -25,7 +26,7 @@ int main() {
         xk1[1]+=result[1];
         d1=delta1(x0);
         d2=delta2(x0,xk1);
-        cout << "Step" << k++ << " delta1: " << d1 << " delta2: " << d2 << endl;
+        cout << "Step" << k++ <<" ///////////////////////\n"<< " delta1: " << d1 << "\n delta2:" << d2 << endl;
         x0=xk1;
     }
     PrintAnswer(x0,k);
@@ -34,4 +35,5 @@ int main() {
     
     return 0;
 }
+
 
