@@ -25,7 +25,7 @@ void Explicit(vector<double> u){
         vector<double> tmp(yk.size());
 		for (int i = 0; i < yk.size(); i++)
 		{
-			tmp[i] = u1d(yk, tk, i);
+			tmp[i] = ud(yk, tk, i);
 		}
 		
 		if (Eps / (abs(tmp[0]) + Eps / tauMax) > Eps / (abs(tmp[1]) + Eps / tauMax))
