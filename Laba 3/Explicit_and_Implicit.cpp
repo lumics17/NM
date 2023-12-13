@@ -57,7 +57,7 @@ void Explicit(vector<double> u){
 				cout << endl;
 		
 		}
-		if (tk + tau > T && tk < T) // åñëè tk ïåðåïðûãíóëà èíòåðâàë T, òî ñìåùàåì tk â T-Tau
+		if (tk + tau > T && tk < T) 
 		{
 			tk = T - tau;
 		}
