@@ -5,7 +5,7 @@
 #include<iomanip>
 using namespace std;
 
-double u1d(vector<double> u, double t, int n)
+double ud(vector<double> u, double t, int n)
 { 
     double Om=2.5+1/40;
 	if (n == 0) {
@@ -16,9 +16,7 @@ double u1d(vector<double> u, double t, int n)
 	}
 	return 0;
 }
-double u2d(double u1,double u2,double t,double a){
-    return -u2*u2+(a*t)/(1+t*t);
-}
+
 void Explicit(vector<double> u){
     double tau = 0, tk = 0;
     double Eps = 0.001, T = 1, tauMax = 0.01;
